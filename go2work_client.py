@@ -14,20 +14,20 @@ class App(tk.Frame):
     data = {}
     active_frame = []
 
-    def update_shift(self, set):
-        selection = self.listbox1.curselection()
-        message = ""
-        for each in selection:
-            message = message + employees[each] + "\n"
-        if set == 1:
-            tkinter.messagebox.showinfo("Shift Update", message + "selected for tomorrow")
-        elif set == 2:
-            tkinter.messagebox.showinfo("Shift Update", message + "unselected for tomorrow")
-
     def forget_frames(self):
         for frame in self.active_frame:
             frame.pack_forget()
         self.active_frame.clear()
+
+    def update_shift(self, set_shift):
+        selection = self.listbox1.curselection()
+        message = ""
+        for each in selection:
+            message = message + employees[each] + "\n"
+        if set_shift == 1:
+            tkinter.messagebox.showinfo("Shift Update", message + "selected for tomorrow")
+        elif set_shift == 2:
+            tkinter.messagebox.showinfo("Shift Update", message + "unselected for tomorrow")
 
     def run_algorithm(self):
         self.forget_frames()
@@ -153,7 +153,6 @@ class App(tk.Frame):
         # json_str = json.dumps(add_data)
         # json_str = str(defineCommands.ADD_EMPLOYEE) + json_str
         # result = connection.send_request_to_server(json_str)
-
         pass
 
     def show_admin_page(self):
