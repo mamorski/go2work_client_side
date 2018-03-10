@@ -70,8 +70,20 @@ class App(tk.Frame):
         tk.Radiobutton(self.search_frame, text="By address", variable=var, value=3).grid(row=2, column=0, sticky='w',
                                                                                          pady=10)
         self.search_input.grid(row=1, column=1, sticky='w')
+        tk.Button(self.search_frame, text='Search', font=("Times New Roman", 10), command=lambda: send_to_db(self)).grid(row=3,
+                                                                                                                     column=1,
+                                                                                                                     sticky='w',
+                                                                                                                     pady=20)
 
-        pass
+        def send_to_db(self):
+            # search_data = {
+            #     'kind': var,
+            #     'search': self.search_input.get()
+            # }
+            # json_str = json.dumps(add_data)
+            # json_str = str(defineCommands.ADD_EMPLOYEE) + json_str
+            # result = connection.send_request_to_server(json_str)
+            pass
 
     def add_employee(self):
         self.forget_frames()
@@ -106,13 +118,11 @@ class App(tk.Frame):
     def show_login_page(self):
         self.forget_frames()
         self.admin_frame.pack_forget()
-        # self.label_frame.pack(padx=50, pady=20, anchor='n')
-        # self.active_frame.append(self.label_frame)
         self.dialog_frame.pack(padx=50, pady=20, anchor='w')
         self.active_frame.append(self.dialog_frame)
         tk.Label(self.dialog_frame, text="Login to GO2WORK system", font=("Times New Roman", 16)).grid(row=0, columnspan=3,
                                                                                                        sticky='n',
-                                                                                                       padx=20, pady=20)
+                                                                                                       padx=20, pady=60)
         tk.Label(self.dialog_frame, text='Username:', font=("Times New Roman", 14)).grid(row=1, column=0, sticky='w',
                                                                                          padx=20)
         self.user_input = tk.Entry(self.dialog_frame, background='white', width=24)
@@ -135,6 +145,17 @@ class App(tk.Frame):
                                                                                                                 ipady=10,
                                                                                                                 ipadx=20)
 
+    def show_route_page(self):
+        self.forget_frames()
+        self.route_frame.pack(padx=50, pady=20, anchor='w')
+        self.active_frame.append(self.route_frame)
+        # route_data = str(defineCommands.GET_ROUTES) + ';{}'
+        # json_str = json.dumps(add_data)
+        # json_str = str(defineCommands.ADD_EMPLOYEE) + json_str
+        # result = connection.send_request_to_server(json_str)
+
+        pass
+
     def show_admin_page(self):
         self.forget_frames()
         self.admin_frame.pack(padx=20, pady=15)
@@ -147,7 +168,9 @@ class App(tk.Frame):
         tk.Button(self.admin_frame, text='Add Employee', font=("Times New Roman", 10),
                   command=lambda: self.add_employee()).grid(row=0, column=4)
         tk.Button(self.admin_frame, text='Logout', font=("Times New Roman", 10),
-                  command=lambda: self.show_login_page()).grid(row=0, column=5)
+                  command=lambda: self.show_login_page()).grid(row=0, column=6)
+        tk.Button(self.admin_frame, text='Get Routes', font=("Times New Roman", 10),
+                  command=lambda: self.show_route_page()).grid(row=0, column=5)
 
     def click_ok(self):
         self.data['username'] = self.user_input.get()
@@ -184,6 +207,7 @@ class App(tk.Frame):
         self.admin_frame = tk.Frame(self)
         self.search_frame = tk.Frame(self)
         self.add_employee_frame = tk.Frame(self)
+        self.route_frame = tk.Frame(self)
         self.user_input = tk.Entry(self.dialog_frame, background='white', width=24)
         self.pass_input = tk.Entry(self.dialog_frame, background='white', width=24, show='*')
         self.search_input = tk.Entry(self.search_frame, background='white', width=24)
