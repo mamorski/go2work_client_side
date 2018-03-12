@@ -16,7 +16,7 @@ def send_request_to_server(data_str):
     try:
         client = get_connection()
         client.sendall(b_message)
-        data = client.recv(1024)
+        data = client.recv(2048)
         print('received {!r}'.format(data))
     except Exception:
         tkinter.messagebox.showinfo("Connection", "Connection error!")
