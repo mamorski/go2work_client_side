@@ -5,6 +5,7 @@ import connection
 import defineCommands
 import validate_address
 import openmap
+import os
 
 
 # employees = ['Igor Mamorski', 'Elad Hezi', 'Alex Melnic', 'Benny Mounits', 'Bibi Netaniahu', 'Oren Hazan', 'Jim Carrey',
@@ -12,6 +13,9 @@ import openmap
 #              'Bred Pit',
 #              'Johny Depp', 'Orlando Bloom', 'Penelope Cruz']
 
+#img = tk.PhotoImage()
+
+receved_routes = {'1': {'1': {'empID': 1231, 'address': 'Sarig St 5 Karmiel', 'firstname': 'igor', 'lastname': 'mamorski'},'2': {'empID': 1234, 'address': 'Ramim St 37 Karmiel', 'firstname': 'vered', 'lastname': 'hezi'},'3': {'empID': 1233, 'address': 'Ha-Dekel St 56 Karmiel', 'firstname': 'elad', 'lastname': 'hezi'},'4': {'empID': 1230, 'address': 'Snunit St 51 Karmiel', 'firstname': 'root', 'lastname': 'root'},'5': {'empID': 1235, 'address': 'Arava St 10 Karmiel', 'firstname': 'ronaldo', 'lastname': 'bloom'},'6': {'empID': 1236, 'address': 'HaShoshanim Street 4 Karmiel', 'firstname': 'johni', 'lastname': 'depp'}},'2': {'1': {'empID': 123456789, 'address': 'pinsker st 15 kiryat ata', 'firstname': 'omer', 'lastname': 'adam'}, '2': {'empID': 1237, 'address': 'Sderot Jabotinsky 10 Kiryat Yam', 'firstname': 'bibi', 'lastname': 'nati'},'3': {'empID': 2030405, 'address': 'kiryat ata, histadrut 10', 'firstname': 'oren', 'lastname': 'hazan'}}}
 
 # noinspection PyAttributeOutsideInit
 class App(tk.Frame):
@@ -288,20 +292,27 @@ class App(tk.Frame):
         self.route_frame.pack(fill='both')
         self.route_frame.configure(background='NavajoWhite3', pady=50)
         self.active_frame.append(self.route_frame)
-        route_data = str(defineCommands.GET_ROUTES) + ';{}'
+        # route_data = str(defineCommands.GET_ROUTES) + ';{}'
         # json_str = json.dumps(route_data)
         # json_str = str(defineCommands.ADD_EMPLOYEE) + json_str
-        result = connection.send_request_to_server(route_data)
-        received_data = result.decode("utf-8")
-        received_data = json.loads(received_data)
+        # result = connection.send_request_to_server(route_data)
+        # received_data = result.decode("utf-8")
+        # received_data = json.loads(received_data)
+        received_data = receved_routes
         index = 0
         routes = []
-        print(received_data)
-        # for vehicle in received_data:
-        #     tk.Button(self.route_frame, bg = 'light blue', text='Route {}'.format(index), font = ("Times New Roman", 10),
-        #               command=lambda :openmap.openmap(routes[index])).grid(row)
-        #     index += 1
-        #     for employee in vehicle:
+        for vehicle in received_data:
+            index += 1
+            i = 1
+            tk.Button(self.route_frame, bg = 'light blue', text='Route {}'.format(index), font=("Times New Roman", 10),
+                      command=lambda :openmap.openmap(routes, index-1)).grid(row=0, column=index-1)
+            print(index-1)
+            for employee in received_data[vehicle]:
+                routes.append([])
+                routes[index-1].append(received_data[vehicle][employee]["address"])
+                str = received_data[vehicle][employee]['firstname'] + ' ' + received_data[vehicle][employee]['lastname']
+                tk.Label(self.route_frame, text=str, bg='NavajoWhite3', fg='snow', font=("Times New Roman", 12)).grid(row=i, column=index-1, sticky='w')
+                i += 1
 
     def show_admin_page(self):
         self.forget_frames()
@@ -333,13 +344,13 @@ class App(tk.Frame):
         self.pass_input.delete(0, len(self.data['password']))
         json_str = json.dumps(self.data)
         json_str = str(defineCommands.LOGIN) + ';' + json_str
-        result = connection.send_request_to_server(json_str)
+        # result = connection.send_request_to_server(json_str)
         # print(result)
         # for debug it's hardcoded
-        # if self.data['username'] == 'root' and self.data['password'] == 'root':
-        #     result = True
-        # else:
-        #     result = False
+        if self.data['username'] == 'root' and self.data['password'] == 'root':
+            result = True
+        else:
+            result = False
 
         if result:
             self.show_admin_page()
