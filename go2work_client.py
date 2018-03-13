@@ -64,12 +64,12 @@ class App(tk.Frame):
     def get_employees(self, employee_list):
         self.forget_frames()
         self.show_employee_frame = tk.Frame(self)
-        self.show_employee_frame.pack(fill = 'both')
+        self.show_employee_frame.pack(fill='both')
         self.active_frame.append(self.show_employee_frame)
-        self.show_employee_frame.configure(background = 'NavajoWhite3', pady=50)
+        self.show_employee_frame.configure(background='NavajoWhite3', pady=50)
         self.scrollbar_V = tk.Scrollbar(self.show_employee_frame)
-        self.listbox1 = tk.Listbox(self.show_employee_frame, yscrollcommand = self.scrollbar_V.set, height = 15,
-                                   width = 40, selectmode = 'multiple')
+        self.listbox1 = tk.Listbox(self.show_employee_frame, yscrollcommand=self.scrollbar_V.set, height=15,
+                                   width=40, selectmode='multiple')
         if employee_list == 0:
             get_data = str(defineCommands.GET_EMPLOYEE_LIST) + ';{}'
             result = connection.send_request_to_server(get_data)
@@ -81,29 +81,21 @@ class App(tk.Frame):
         for employee in received_data:
             self.listbox1.insert('end', employee['firstname'] + ' ' + employee['lastname'] + ' - Status ' + str(
                 employee['status']))
-        self.listbox1.grid(rowspan = 5, row = 0, column = 1, sticky = 'w', pady = 50)
-        self.scrollbar_V.grid(row = 0, rowspan = 5, column = 2, sticky = 'w')
-        self.scrollbar_V.config(command = self.listbox1.yview)
-        tk.Button(self.show_employee_frame, bg = 'light blue', text = 'Set Shift', default = 'active',
-                  command = lambda: self.update_shift_or_delete_worker(1, received_data)).grid(row = 0, column = 0,
-                                                                                               sticky = 'w',
-                                                                                               ipady = 10,
-                                                                                               ipadx = 20, pady = 20, padx=50)
-        tk.Button(self.show_employee_frame, bg = 'light blue', text = 'Unset Shift', default = 'active',
-                  command = lambda: self.update_shift_or_delete_worker(0, received_data)).grid(row = 1,
-                                                                                               column = 0, sticky = 'w',
-                                                                                               ipady = 10,
-                                                                                               ipadx = 12, pady=20, padx=50)
-        tk.Button(self.show_employee_frame, bg = 'light blue', text = 'Remove', default = 'active',
-                  command = lambda: self.update_shift_or_delete_worker(2, received_data)).grid(row = 2,
-                                                                                               column = 0, sticky = 'w',
-                                                                                               pady = 20,
-                                                                                               ipady = 10,
-                                                                                               ipadx = 20, padx=50)
-        tk.Button(self.show_employee_frame, bg = 'light blue', text = 'Update', default = 'active',
-                  command = lambda: self.update_worker(received_data)).grid(row = 3, column = 0, sticky = 'w',
-                                                                            ipady = 10,
-                                                                            ipadx = 20, pady=20, padx=50)
+        self.listbox1.grid(rowspan=5, row=0, column=1, sticky='w', pady=50)
+        self.scrollbar_V.grid(row=0, rowspan=5, column=2, sticky='w')
+        self.scrollbar_V.config(command=self.listbox1.yview)
+        tk.Button(self.show_employee_frame, bg='light blue', text='Set Shift', default='active',
+                  command=lambda: self.update_shift_or_delete_worker(1, received_data)).grid(row=0, column=0, sticky='w',
+                                                                                             ipady=10, ipadx=20, pady=20, padx=50)
+        tk.Button(self.show_employee_frame, bg='light blue', text='Unset Shift', default='active',
+                  command=lambda: self.update_shift_or_delete_worker(0, received_data)).grid(row=1, column=0, sticky='w',
+                                                                                             ipady=10, ipadx=12, pady=20, padx=50)
+        tk.Button(self.show_employee_frame, bg='light blue', text='Remove', default='active',
+                  command=lambda: self.update_shift_or_delete_worker(2, received_data)).grid(row=2, column=0, sticky='w',
+                                                                                             pady=20, ipady=10, ipadx=20, padx=50)
+        tk.Button(self.show_employee_frame, bg='light blue', text='Update', default='active',
+                  command=lambda: self.update_worker(received_data)).grid(row=3, column=0, sticky='w', ipady=10,
+                                                                          ipadx=20, pady=20, padx=50)
 
     def update_worker(self, employees):
         selection = self.listbox1.curselection()
@@ -114,45 +106,35 @@ class App(tk.Frame):
             tkinter.messagebox.showinfo("Update", "You should select only one person")
             return
         window = tk.Toplevel(root)
-        window.configure(background = 'NavajoWhite3')
-        self.add_name = tk.Entry(window, background = 'white', width = 24)
+        window.configure(background='NavajoWhite3')
+        self.add_name = tk.Entry(window, background='white', width=24)
         self.add_name.insert('end', employees[selection[0]]['firstname'])
-        self.add_name.grid(row = 0, column = 1, sticky = 'w', padx = 20)
-        self.add_last_name = tk.Entry(window, background = 'white', width = 24)
-        self.add_last_name.grid(row = 1, column = 1, sticky = 'w', padx = 20)
+        self.add_name.grid(row=0, column=1, sticky='w', padx=20)
+        self.add_last_name = tk.Entry(window, background='white', width=24)
+        self.add_last_name.grid(row=1, column=1, sticky='w', padx=20)
         self.add_last_name.insert('end', employees[selection[0]]['lastname'])
-        self.add_address = tk.Entry(window, background = 'white', width = 24)
-        self.add_address.grid(row = 2, column = 1, sticky = 'w', padx = 20)
+        self.add_address = tk.Entry(window, background='white', width=24)
+        self.add_address.grid(row=2, column=1, sticky='w', padx=20)
         self.add_address.insert('end', employees[selection[0]]['address'])
-        self.add_id = tk.Entry(window, background = 'white', width = 24)
-        self.add_id.grid(row = 3, column = 1, sticky = 'w', padx = 20)
+        self.add_id = tk.Entry(window, background='white', width=24)
+        self.add_id.grid(row=3, column=1, sticky='w', padx=20)
         self.add_id.insert('end', employees[selection[0]]['empID'])
-        self.add_status = tk.Entry(window, background = 'white', width = 24)
-        self.add_status.grid(row = 4, column = 1, sticky = 'w', padx = 20)
+        self.add_status = tk.Entry(window, background='white', width=24)
+        self.add_status.grid(row=4, column=1, sticky='w', padx=20)
         self.add_status.insert('end', employees[selection[0]]['status'])
-        tk.Label(window, text = 'Name', bg = 'NavajoWhite3', fg = 'snow', font = ("Times New Roman", 16)).grid(row = 0,
-                                                                                                               column = 0,
-                                                                                                               sticky = 'w')
-        tk.Label(window, text = 'Last Name', bg = 'NavajoWhite3', fg = 'snow', font = ("Times New Roman", 16)).grid(
-            row = 1, column = 0, sticky = 'w')
-        tk.Label(window, text = 'Address', bg = 'NavajoWhite3', fg = 'snow', font = ("Times New Roman", 16)).grid(
-            row = 2, column = 0, sticky = 'w')
-        tk.Label(window, text = 'Id', bg = 'NavajoWhite3', fg = 'snow', font = ("Times New Roman", 16)).grid(row = 3,
-                                                                                                             column = 0,
-                                                                                                             sticky = 'w')
-        tk.Label(window, text = 'Status', bg = 'NavajoWhite3', fg = 'snow', font = ("Times New Roman", 16)).grid(
-            row = 4, column = 0, sticky = 'w')
-        tk.Button(window, text = 'Update', bg = 'light blue', font = ("Times New Roman", 10),
-                  command = lambda: make_update()).grid(row = 5,
-                                                        column = 0,
-                                                        sticky = 'w',
-                                                        padx = 20,
-                                                        pady = 20)
-        tk.Button(window, text = 'Cancel', bg = 'light blue', font = ("Times New Roman", 10),
-                  command = lambda: window.destroy()).grid(row = 5,
-                                                           column = 1,
-                                                           sticky = 'w',
-                                                           pady = 20)
+        tk.Label(window, text='Name', bg='NavajoWhite3', fg='snow',
+                 font=("Times New Roman", 16)).grid(row=0, column=0, sticky='w')
+        tk.Label(window, text='Last Name', bg='NavajoWhite3', fg='snow', font=("Times New Roman", 16)).grid(
+            row=1, column=0, sticky='w')
+        tk.Label(window, text='Address', bg='NavajoWhite3', fg='snow', font=("Times New Roman", 16)).grid(
+            row=2, column=0, sticky='w')
+        tk.Label(window, text='Id', bg='NavajoWhite3', fg='snow', font=("Times New Roman", 16)).grid(row=3, column=0, sticky='w')
+        tk.Label(window, text='Status', bg='NavajoWhite3', fg='snow', font=("Times New Roman", 16)).grid(
+            row=4, column=0, sticky='w')
+        tk.Button(window, text='Update', bg='light blue', font=("Times New Roman", 10),
+                  command=lambda: make_update()).grid(row=5, column=0, sticky='w', padx=20, pady=20)
+        tk.Button(window, text='Cancel', bg='light blue', font=("Times New Roman", 10),
+                  command=lambda: window.destroy()).grid(row=5, column=1, sticky='w', pady=20)
 
         def make_update():
             if (self.add_status.get() == '' or self.add_address.get() == '' or self.add_last_name.get() == ''
@@ -168,10 +150,10 @@ class App(tk.Frame):
                 return
             add_data = {
                 'firstname': self.add_name.get(),
-                'lastname':  self.add_last_name.get(),
-                'address':   self.add_address.get(),
-                'empID':     self.add_id.get(),
-                'status':    self.add_status.get()
+                'lastname': self.add_last_name.get(),
+                'address': self.add_address.get(),
+                'empID': self.add_id.get(),
+                'status': self.add_status.get()
             }
             json_str = json.dumps(add_data)
             json_str = str(defineCommands.UPDATE) + ';' + json_str
@@ -185,27 +167,21 @@ class App(tk.Frame):
     def search_employee(self):
         self.forget_frames()
         self.search_frame = tk.Frame(self)
-        self.search_frame.configure(background = 'NavajoWhite3', pady=70, padx=130)
+        self.search_frame.configure(background='NavajoWhite3', pady=70, padx=130)
         self.search_frame.pack(fill='both')
         self.active_frame.append(self.search_frame)
         var = tk.IntVar()
         var.set(0)
-        tk.Radiobutton(self.search_frame, bg='NavajoWhite3', text = "By name", font = ("Times New Roman", 14), variable = var, value = 1).grid(row = 0, column = 0,
-                                                                                            sticky = 'w',
-                                                                                            pady = 10)
-        tk.Radiobutton(self.search_frame, bg='NavajoWhite3',text = "By id", font = ("Times New Roman", 14), variable = var, value = 2).grid(row = 1, column = 0,
-                                                                                          sticky = 'w',
-                                                                                          pady = 10)
-        tk.Radiobutton(self.search_frame, bg='NavajoWhite3', text = "By address", font = ("Times New Roman", 14), variable = var, value = 3).grid(row = 2, column = 0,
-                                                                                               sticky = 'w',
-                                                                                               pady = 10)
-        self.search_input = tk.Entry(self.search_frame, background = 'white', width = 24)
-        self.search_input.grid(row = 1, column = 1, sticky = 'w')
-        tk.Button(self.search_frame, bg = 'light blue', text = 'Search', font = ("Times New Roman", 10),
-                  command = lambda: send_to_db()).grid(row = 3,
-                                                       column = 1,
-                                                       sticky = 'w',
-                                                       pady = 20)
+        tk.Radiobutton(self.search_frame, bg='NavajoWhite3', text="By name", font=("Times New Roman", 14), variable=var,
+                       value=1).grid(row=0, column=0, sticky='w', pady=10)
+        tk.Radiobutton(self.search_frame, bg='NavajoWhite3', text="By id", font=("Times New Roman", 14), variable=var,
+                       value=2).grid(row=1, column=0, sticky='w', pady=10)
+        tk.Radiobutton(self.search_frame, bg='NavajoWhite3', text="By address", font=("Times New Roman", 14),
+                       variable=var, value=3).grid(row=2, column=0, sticky='w', pady=10)
+        self.search_input = tk.Entry(self.search_frame, background='white', width=24)
+        self.search_input.grid(row=1, column=1, sticky='w')
+        tk.Button(self.search_frame, bg='light blue', text='Search', font=("Times New Roman", 10),
+                  command=lambda: send_to_db()).grid(row=3, column=1, sticky='w', pady=20)
 
         def send_to_db():
             if self.search_input.get() == "":
@@ -216,7 +192,7 @@ class App(tk.Frame):
                 return
             search_types = ['firstname', 'empID', 'address']
             search_data = {
-                'searchby':                  search_types[var.get() - 1],
+                'searchby': search_types[var.get() - 1],
                 search_types[var.get() - 1]: self.search_input.get()
             }
             json_str = json.dumps(search_data)
@@ -230,31 +206,27 @@ class App(tk.Frame):
     def add_employee(self):
         self.forget_frames()
         self.add_employee_frame = tk.Frame(self)
-        self.add_employee_frame.configure(background = 'NavajoWhite3')
-        self.add_employee_frame.pack(padx = 50, pady = 100, anchor = 'n')
+        self.add_employee_frame.configure(background='NavajoWhite3')
+        self.add_employee_frame.pack(padx=50, pady=100, anchor='n')
         self.active_frame.append(self.add_employee_frame)
-        self.add_name = tk.Entry(self.add_employee_frame, background = 'white', width = 24)
-        self.add_name.grid(row = 0, column = 1, sticky = 'w', padx = 20)
-        self.add_last_name = tk.Entry(self.add_employee_frame, background = 'white', width = 24)
-        self.add_last_name.grid(row = 1, column = 1, sticky = 'w', padx = 20)
-        self.add_address = tk.Entry(self.add_employee_frame, background = 'white', width = 24)
-        self.add_address.grid(row = 2, column = 1, sticky = 'w', padx = 20)
-        self.add_id = tk.Entry(self.add_employee_frame, background = 'white', width = 24)
-        self.add_id.grid(row = 3, column = 1, sticky = 'w', padx = 20)
-        tk.Label(self.add_employee_frame, bg = 'NavajoWhite3', fg = 'snow', text = 'Name',
-                 font = ("Times New Roman", 16)).grid(row = 0, column = 0,
-                                                      sticky = 'w')
-        tk.Label(self.add_employee_frame, bg = 'NavajoWhite3', fg = 'snow', text = 'Last Name',
-                 font = ("Times New Roman", 16)).grid(row = 1, column = 0,
-                                                      sticky = 'w')
-        tk.Label(self.add_employee_frame, bg = 'NavajoWhite3', fg = 'snow', text = 'Address',
-                 font = ("Times New Roman", 16)).grid(row = 2, column = 0,
-                                                      sticky = 'w')
-        tk.Label(self.add_employee_frame, bg = 'NavajoWhite3', fg = 'snow', text = 'Id',
-                 font = ("Times New Roman", 16)).grid(row = 3, column = 0,
-                                                      sticky = 'w')
-        tk.Button(self.add_employee_frame, bg = 'light blue', text = 'Add', font = ("Times New Roman", 10),
-                  command = lambda: send_to_db()).grid(row = 5, column = 1, sticky = 'w')
+        self.add_name = tk.Entry(self.add_employee_frame, background='white', width=24)
+        self.add_name.grid(row=0, column=1, sticky='w', padx=20)
+        self.add_last_name = tk.Entry(self.add_employee_frame, background='white', width=24)
+        self.add_last_name.grid(row=1, column=1, sticky='w', padx=20)
+        self.add_address = tk.Entry(self.add_employee_frame, background='white', width=24)
+        self.add_address.grid(row=2, column=1, sticky='w', padx=20)
+        self.add_id = tk.Entry(self.add_employee_frame, background='white', width=24)
+        self.add_id.grid(row=3, column=1, sticky='w', padx=20)
+        tk.Label(self.add_employee_frame, bg='NavajoWhite3', fg='snow', text='Name',
+                 font=("Times New Roman", 16)).grid(row=0, column=0, sticky='w')
+        tk.Label(self.add_employee_frame, bg='NavajoWhite3', fg='snow', text='Last Name',
+                 font=("Times New Roman", 16)).grid(row=1, column=0, sticky='w')
+        tk.Label(self.add_employee_frame, bg='NavajoWhite3', fg='snow', text='Address',
+                 font=("Times New Roman", 16)).grid(row=2, column=0, sticky='w')
+        tk.Label(self.add_employee_frame, bg='NavajoWhite3', fg='snow', text='Id',
+                 font=("Times New Roman", 16)).grid(row=3, column=0, sticky='w')
+        tk.Button(self.add_employee_frame, bg='light blue', text='Add', font=("Times New Roman", 10),
+                  command=lambda: send_to_db()).grid(row=5, column=1, sticky='w')
 
         def send_to_db():
             if (self.add_name.get() == "" or self.add_last_name.get() == "" or self.add_address.get() == ""
@@ -270,10 +242,10 @@ class App(tk.Frame):
                 return
             add_data = {
                 'firstname': self.add_name.get(),
-                'lastname':  self.add_last_name.get(),
-                'address':   self.add_address.get(),
-                'empID':     self.add_id.get(),
-                'status':    0
+                'lastname': self.add_last_name.get(),
+                'address': self.add_address.get(),
+                'empID': self.add_id.get(),
+                'status': 0
             }
             json_str = json.dumps(add_data)
             json_str = str(defineCommands.ADD_EMPLOYEE) + ';' + json_str
@@ -290,45 +262,31 @@ class App(tk.Frame):
         self.forget_frames()
         self.admin_frame.pack_forget()
         self.dialog_frame = tk.Frame(self)
-        self.dialog_frame.configure(background = 'NavajoWhite3')
-        self.user_input = tk.Entry(self.dialog_frame, background = 'white', width = 24)
-        self.pass_input = tk.Entry(self.dialog_frame, background = 'white', width = 24, show = '*')
+        self.dialog_frame.configure(background='NavajoWhite3')
+        self.user_input = tk.Entry(self.dialog_frame, background='white', width=24)
+        self.pass_input = tk.Entry(self.dialog_frame, background='white', width=24, show='*')
         self.dialog_frame.pack()
         self.active_frame.append(self.dialog_frame)
-        tk.Label(self.dialog_frame, text = "Login to GO2WORK system", bg = 'NavajoWhite3', fg = 'snow',
-                 font = ("Times New Roman", 22)).grid(row = 0,
-                                                      columnspan = 3,
-                                                      sticky = 'n',
-                                                      pady = 60)
-        tk.Label(self.dialog_frame, text = 'Username:', bg = 'NavajoWhite3', fg = 'snow',
-                 font = ("Times New Roman", 16)).grid(row = 1, column = 0,
-                                                      sticky = 'w',
-                                                      padx = 20)
-        self.user_input = tk.Entry(self.dialog_frame, background = 'white', width = 24)
-        self.user_input.grid(row = 1, column = 1, sticky = 'w', padx = 20)
+        tk.Label(self.dialog_frame, text="Login to GO2WORK system", bg='NavajoWhite3', fg='snow',
+                 font=("Times New Roman", 22)).grid(row=0, columnspan=3, sticky='n', pady=60)
+        tk.Label(self.dialog_frame, text='Username:', bg='NavajoWhite3', fg='snow',
+                 font=("Times New Roman", 16)).grid(row=1, column=0, sticky='w', padx=20)
+        self.user_input = tk.Entry(self.dialog_frame, background='white', width=24)
+        self.user_input.grid(row=1, column=1, sticky='w', padx=20)
         self.user_input.focus_set()
-        tk.Label(self.dialog_frame, text = 'Password:', bg = 'NavajoWhite3', fg = 'snow',
-                 font = ("Times New Roman", 16)).grid(row = 2, column = 0,
-                                                      sticky = 'w',
-                                                      padx = 20)
-        self.pass_input.grid(row = 2, column = 1, sticky = 'w', padx = 20)
-        tk.Button(self.dialog_frame, text = 'OK', default = 'active', bg = 'light blue',
-                  command = lambda: self.click_ok()).grid(row = 3,
-                                                          column = 0,
-                                                          sticky = 'w',
-                                                          padx = 20,
-                                                          pady = 50,
-                                                          ipady = 10,
-                                                          ipadx = 20)
-        tk.Button(self.dialog_frame, text = 'Cancel', default = 'active', bg = 'light blue',
-                  command = lambda: self.click_cancel()).grid(
-            row = 3, column = 1, sticky = 'w', padx = 100, pady = 50, ipady = 10, ipadx = 10)
+        tk.Label(self.dialog_frame, text='Password:', bg='NavajoWhite3', fg='snow',
+                 font=("Times New Roman", 16)).grid(row=2, column=0, sticky='w', padx=20)
+        self.pass_input.grid(row=2, column=1, sticky='w', padx=20)
+        tk.Button(self.dialog_frame, text='OK', default='active', bg='light blue',
+                  command=lambda: self.click_ok()).grid(row=3, column=0, sticky='w', padx=20, pady=50, ipady=10, ipadx=20)
+        tk.Button(self.dialog_frame, text='Cancel', default='active', bg='light blue',
+                  command=lambda: self.click_cancel()).grid(row=3, column=1, sticky='w', padx=100, pady=50, ipady=10, ipadx=10)
 
     def show_route_page(self):
         self.forget_frames()
         self.route_frame = tk.Frame(self)
-        self.route_frame.pack(fill = 'both')
-        self.route_frame.configure(background = 'NavajoWhite3', pady=50)
+        self.route_frame.pack(fill='both')
+        self.route_frame.configure(background='NavajoWhite3', pady=50)
         self.active_frame.append(self.route_frame)
         route_data = str(defineCommands.GET_ROUTES) + ';{}'
         # json_str = json.dumps(route_data)
@@ -348,18 +306,18 @@ class App(tk.Frame):
     def show_admin_page(self):
         self.forget_frames()
         self.admin_frame.pack()
-        tk.Button(self.admin_frame, text = 'Show Employee List', bg = 'light blue', font = ("Times New Roman", 10),
-                  command = lambda: self.get_employees(0)).grid(row = 0, column = 0)
-        tk.Button(self.admin_frame, bg = 'light blue', text = 'Create Routes', font = ("Times New Roman", 10),
-                  command = lambda: self.run_algorithm()).grid(row = 0, column = 2)
-        tk.Button(self.admin_frame, bg = 'light blue', text = 'Search Employee', font = ("Times New Roman", 10),
-                  command = lambda: self.search_employee()).grid(row = 0, column = 3)
-        tk.Button(self.admin_frame, bg = 'light blue', text = 'Add Employee', font = ("Times New Roman", 10),
-                  command = lambda: self.add_employee()).grid(row = 0, column = 4)
-        tk.Button(self.admin_frame, bg = 'light blue', text = 'Logout', font = ("Times New Roman", 10),
-                  command = lambda: self.logout()).grid(row = 0, column = 6)
-        tk.Button(self.admin_frame, bg = 'light blue', text = 'Get Routes', font = ("Times New Roman", 10),
-                  command = lambda: self.show_route_page()).grid(row = 0, column = 5)
+        tk.Button(self.admin_frame, text='Show Employee List', bg='light blue', font=("Times New Roman", 10),
+                  command=lambda: self.get_employees(0)).grid(row=0, column=0)
+        tk.Button(self.admin_frame, bg='light blue', text='Create Routes', font=("Times New Roman", 10),
+                  command=lambda: self.run_algorithm()).grid(row=0, column=2)
+        tk.Button(self.admin_frame, bg='light blue', text='Search Employee', font=("Times New Roman", 10),
+                  command=lambda: self.search_employee()).grid(row=0, column=3)
+        tk.Button(self.admin_frame, bg='light blue', text='Add Employee', font=("Times New Roman", 10),
+                  command=lambda: self.add_employee()).grid(row=0, column=4)
+        tk.Button(self.admin_frame, bg='light blue', text='Logout', font=("Times New Roman", 10),
+                  command=lambda: self.logout()).grid(row=0, column=6)
+        tk.Button(self.admin_frame, bg='light blue', text='Get Routes', font=("Times New Roman", 10),
+                  command=lambda: self.show_route_page()).grid(row=0, column=5)
 
     def logout(self):
         msg = tkinter.messagebox.askyesno("Logout", "Are you sure to logout?")
@@ -397,7 +355,7 @@ class App(tk.Frame):
         tk.Frame.__init__(self, master)
         self.pack()
         self.admin_frame = tk.Frame(self)
-        self.admin_frame.configure(background = 'NavajoWhite3')
+        self.admin_frame.configure(background='NavajoWhite3')
         self.master.title("GO2WORK")
         self.master.geometry('720x480')
         self.show_login_page()
@@ -405,6 +363,6 @@ class App(tk.Frame):
 
 if __name__ == '__main__':
     root = tk.Tk()
-    root.configure(background = 'NavajoWhite3')
+    root.configure(background='NavajoWhite3')
     app = App(root)
     app.mainloop()
