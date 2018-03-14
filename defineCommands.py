@@ -1,5 +1,4 @@
 # define commands to server
-#
 
 LOGIN = 1
 ADD_EMPLOYEE = 2
