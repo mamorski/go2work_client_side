@@ -387,6 +387,7 @@ class Go2workClientGUI(tk.Frame):
         tk.Button(self.admin_frame, bg=btn_bg_color, text='Check Running Status', font=("Times New Roman", 14), command=lambda: self.check_algorithm_status()).grid(row=0, columnspan=2, column=6, sticky='nwse', padx=5)
         tk.Button(self.admin_frame, bg=btn_bg_color, text='Logout', font=("Times New Roman", 14), command=lambda: self.logout()).grid(row=0, columnspan=2, column=8, sticky='nwse', padx=5)
 
+   
     # logout function
     def logout(self):
         msg = tkinter.messagebox.askyesno("Logout", "Are you sure to logout?")
