@@ -13,9 +13,11 @@ bgrd_color = 'deep sky blue'
 btn_bg_color = 'OliveDrab1'
 lbl_bg_color = 'deep sky blue'
 radio_color = 'saddle brown'
-radio_font = ("Times New Roman", 14, 'bold')
-lbl_font = font=("Times New Roman", 16, 'bold')
+radio_font = ("Century Gotic", 14, 'bold')
+lbl_font = font=("Century Gotic", 16, 'bold')
 lbl_color = 'saddle brown'
+main_btn_font = ("Century Gotic", 14)
+employee_btn_font = ("Century Gotic", 12)
 ######################### end of fonts and colors ######################################
 
 
@@ -37,9 +39,9 @@ class Go2workClientGUI(tk.Frame):
     def employees_page(self, employee_list):
         self.forget_frames()
         self.show_employee_frame = tk.Frame(self)
-        self.show_employee_frame.pack(fill='both', expand=True)
+        self.show_employee_frame.pack(anchor='center', expand=True, side='top', fill='both')
         self.active_frame.append(self.show_employee_frame)
-        self.show_employee_frame.configure(background=bgrd_color, pady=50)
+        self.show_employee_frame.configure(background=bgrd_color)
         self.scrollbar_V = tk.Scrollbar(self.show_employee_frame)
         self.listbox1 = tk.Listbox(self.show_employee_frame, yscrollcommand=self.scrollbar_V.set, height=15, width=40, selectmode='multiple')
         
@@ -59,13 +61,12 @@ class Go2workClientGUI(tk.Frame):
         self.listbox1.grid(rowspan=5, row=0, column=1, sticky='w', pady=50)
         self.scrollbar_V.grid(row=0, rowspan=5, column=2, sticky='w')
         self.scrollbar_V.config(command=self.listbox1.yview)
-        employee_btn_font = ("Times New Roman", 12, 'bold')
-        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Set Shift', font=employee_btn_font, command=lambda: self.update_shift_or_delete_worker(1, received_data)).grid(row=0, column=0, sticky='w', ipady=10, ipadx=20, pady=20)
-        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Unset Shift', font=employee_btn_font, command=lambda: self.update_shift_or_delete_worker(0, received_data)).grid(row=1, column=0, sticky='w', ipady=10, ipadx=12, pady=20)
-        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Remove', font=employee_btn_font, command=lambda: self.update_shift_or_delete_worker(2, received_data)).grid(row=2, column=0, sticky='w', pady=20, ipady=10, ipadx=20)
-        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Update', font=employee_btn_font, command=lambda: self.update_worker(received_data)).grid(row=3, column=0, sticky='w', ipady=10, ipadx=20, pady=20)
-        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Search Employee', font=employee_btn_font, command=lambda: self.search_employee()).grid(row=0, column=3, ipady=10)
-        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Add Employee', font=employee_btn_font, command=lambda: self.add_employee()).grid(row=1, column=3, ipady=10)
+        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Set Shift', font=employee_btn_font, command=lambda: self.update_shift_or_delete_worker(1, received_data)).grid(row=0, column=0, sticky='w', ipady=10, ipadx=20, pady=20, padx=30)
+        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Unset Shift', font=employee_btn_font, command=lambda: self.update_shift_or_delete_worker(0, received_data)).grid(row=1, column=0, sticky='w', ipady=10, ipadx=12, pady=20, padx=30)
+        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Remove', font=employee_btn_font, command=lambda: self.update_shift_or_delete_worker(2, received_data)).grid(row=2, column=0, sticky='w', pady=20, ipady=10, ipadx=20, padx=30)
+        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Update', font=employee_btn_font, command=lambda: self.update_worker(received_data)).grid(row=3, column=0, sticky='w', ipady=10, ipadx=20, pady=20, padx=30)
+        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Search Employee', font=employee_btn_font, command=lambda: self.search_employee()).grid(row=0, column=3, ipady=10, padx=30)
+        tk.Button(self.show_employee_frame, bg=btn_bg_color, text='Add Employee', font=employee_btn_font, command=lambda: self.add_employee()).grid(row=1, column=3, ipady=10, padx=30)
 
     # update shift and delete workers from db operations
     def update_shift_or_delete_worker(self, set_shift, employees):
@@ -180,8 +181,8 @@ class Go2workClientGUI(tk.Frame):
     def search_employee(self):
         self.forget_frames()
         self.search_frame = tk.Frame(self)
-        self.search_frame.pack(fill='both')
-        self.search_frame.configure(background=bgrd_color, pady=70, padx=130)
+        self.search_frame.pack(anchor='w', expand=True, side='left', fill='both')
+        self.search_frame.configure(background=bgrd_color)
         self.active_frame.append(self.search_frame)
         var = tk.IntVar()
         var.set(0)
@@ -216,8 +217,8 @@ class Go2workClientGUI(tk.Frame):
     def add_employee(self):
         self.forget_frames()
         self.add_employee_frame = tk.Frame(self)
-        self.add_employee_frame.pack(fill='both')
-        self.add_employee_frame.configure(background=bgrd_color, pady=70, padx=130)
+        self.add_employee_frame.pack(anchor='w', expand=True, side='left', fill='both')
+        self.add_employee_frame.configure(background=bgrd_color)
         self.active_frame.append(self.add_employee_frame)
         self.add_name = tk.Entry(self.add_employee_frame, background='white', width=24)
         self.add_name.grid(row=0, column=1, sticky='w', padx=20)
@@ -273,8 +274,8 @@ class Go2workClientGUI(tk.Frame):
     def algorithm_page(self):
         self.forget_frames()
         self.run_algo_frame = tk.Frame(self)
-        self.run_algo_frame.pack(fill='both')
-        self.run_algo_frame.configure(bg=bgrd_color, pady=100)
+        self.run_algo_frame.pack(anchor='w', expand=True, side='left', fill='both')
+        self.run_algo_frame.configure(bg=bgrd_color)
         self.active_frame.append(self.run_algo_frame)
         var = tk.IntVar()
         var.set(1)
@@ -316,8 +317,8 @@ class Go2workClientGUI(tk.Frame):
     def check_algorithm_status(self):
         self.forget_frames()
         self.check_frame = tk.Frame(self)
-        self.check_frame.pack(fill='both', expand=True)
-        self.check_frame.configure(bg=bgrd_color, pady=70)
+        self.check_frame.pack(anchor='w', expand=True, side='left', fill='both')
+        self.check_frame.configure(bg=bgrd_color)
         self.active_frame.append(self.check_frame)
         request = str(defineCommands.CHECK_ALGORITHM_STATUS) + ';{}'
         result = connection.send_request_to_server(request)
@@ -330,7 +331,7 @@ class Go2workClientGUI(tk.Frame):
     def show_route_page(self):
         self.forget_frames()
         self.route_frame = tk.Frame(self)
-        self.route_frame.pack(fill='both', expand=True)
+        self.route_frame.pack(anchor='w', expand=True, side='left', fill='both')
         self.route_frame.configure(background=bgrd_color)
         self.active_frame.append(self.route_frame)
         route_data = str(defineCommands.GET_ROUTES) + ";{}"
@@ -379,13 +380,13 @@ class Go2workClientGUI(tk.Frame):
     # panel of main buttons (always appear)
     def main_buttons_panel(self):
         self.forget_frames()
-        self.admin_frame.pack(fill='both', ipadx=30)
+        self.admin_frame.pack(anchor='w', expand=False, side='left', fill='y')
         self.admin_frame.configure(background=bgrd_color)
-        tk.Button(self.admin_frame, text='Employee Page', bg=btn_bg_color, font=("Times New Roman", 14), command=lambda: self.employees_page(0)).grid(row=0, columnspan=2, column=0, sticky='nwse', padx=5)
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Create Routes', font=("Times New Roman", 14), command=lambda: self.algorithm_page()).grid(row=0, columnspan=2, column=2, sticky='nwse', padx=5)
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Get Routes', font=("Times New Roman", 14), command=lambda: self.show_route_page()).grid(row=0, columnspan=2, column=4, sticky='nwse', padx=5)
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Check Running Status', font=("Times New Roman", 14), command=lambda: self.check_algorithm_status()).grid(row=0, columnspan=2, column=6, sticky='nwse', padx=5)
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Logout', font=("Times New Roman", 14), command=lambda: self.logout()).grid(row=0, columnspan=2, column=8, sticky='nwse', padx=5)
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Employee Page', font=main_btn_font, command=lambda: self.employees_page(0)).grid(row=0, column=0, sticky='nwse')
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Create Routes', font=main_btn_font, command=lambda: self.algorithm_page()).grid(row=1, column=0, sticky='nwse')
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Get Routes', font=main_btn_font, command=lambda: self.show_route_page()).grid(row=2, column=0, sticky='nwse')
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Check Running \nStatus', font=main_btn_font, command=lambda: self.check_algorithm_status()).grid(row=3, column=0, sticky='nwse')
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Logout', font=main_btn_font, command=lambda: self.logout()).grid(row=4, column=0, sticky='nwse')
 
    
     # logout function
@@ -428,8 +429,10 @@ class Go2workClientGUI(tk.Frame):
     ############################## init class #############################################
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        self.pack()
-        self.admin_frame = tk.Frame(self)
+        self.pack(anchor='w', expand=True, fill='both')
+        self.configure(bg=bgrd_color)
+        self.admin_frame = tk.Frame(self, bg=bgrd_color)
+        self.master.configure(bg=bgrd_color)
         self.master.title("GO2WORK")
         self.master.geometry('960x720')
         self.show_login_page()
