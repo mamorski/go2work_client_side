@@ -6,6 +6,7 @@ import defineCommands
 import validate_address
 import openmap
 import os
+from tkinter import ttk
 
 ######################### fonts and colors ######################################
 bgrd_color = 'deep sky blue'
@@ -36,7 +37,7 @@ class Go2workClientGUI(tk.Frame):
     def employees_page(self, employee_list):
         self.forget_frames()
         self.show_employee_frame = tk.Frame(self)
-        self.show_employee_frame.pack(fill='both')
+        self.show_employee_frame.pack(fill='both', expand=True)
         self.active_frame.append(self.show_employee_frame)
         self.show_employee_frame.configure(background=bgrd_color, pady=50)
         self.scrollbar_V = tk.Scrollbar(self.show_employee_frame)
@@ -315,7 +316,7 @@ class Go2workClientGUI(tk.Frame):
     def check_algorithm_status(self):
         self.forget_frames()
         self.check_frame = tk.Frame(self)
-        self.check_frame.pack(fill='both')
+        self.check_frame.pack(fill='both', expand=True)
         self.check_frame.configure(bg=bgrd_color, pady=70)
         self.active_frame.append(self.check_frame)
         request = str(defineCommands.CHECK_ALGORITHM_STATUS) + ';{}'
@@ -329,7 +330,7 @@ class Go2workClientGUI(tk.Frame):
     def show_route_page(self):
         self.forget_frames()
         self.route_frame = tk.Frame(self)
-        self.route_frame.pack(fill='both')
+        self.route_frame.pack(fill='both', expand=True)
         self.route_frame.configure(background=bgrd_color)
         self.active_frame.append(self.route_frame)
         route_data = str(defineCommands.GET_ROUTES) + ";{}"
@@ -378,13 +379,13 @@ class Go2workClientGUI(tk.Frame):
     # panel of main buttons (always appear)
     def main_buttons_panel(self):
         self.forget_frames()
-        self.admin_frame.pack(fill='both')
+        self.admin_frame.pack(fill='both', ipadx=30)
         self.admin_frame.configure(background=bgrd_color)
-        tk.Button(self.admin_frame, text='Employee Page', bg=btn_bg_color, font=("Times New Roman", 10), command=lambda: self.employees_page(0)).grid(row=0, column=0, sticky='n')
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Create Routes', font=("Times New Roman", 10), command=lambda: self.algorithm_page()).grid(row=0, column=1, sticky='n')
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Get Routes', font=("Times New Roman", 10), command=lambda: self.show_route_page()).grid(row=0, column=2, sticky='n')
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Check Running Status', font=("Times New Roman", 10), command=lambda: self.check_algorithm_status()).grid(row=0, column=3, sticky='n')
-        tk.Button(self.admin_frame, bg=btn_bg_color, text='Logout', font=("Times New Roman", 10), command=lambda: self.logout()).grid(row=0, column=4, sticky='n')
+        tk.Button(self.admin_frame, text='Employee Page', bg=btn_bg_color, font=("Times New Roman", 14), command=lambda: self.employees_page(0)).grid(row=0, columnspan=2, column=0, sticky='nwse', padx=5)
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Create Routes', font=("Times New Roman", 14), command=lambda: self.algorithm_page()).grid(row=0, columnspan=2, column=2, sticky='nwse', padx=5)
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Get Routes', font=("Times New Roman", 14), command=lambda: self.show_route_page()).grid(row=0, columnspan=2, column=4, sticky='nwse', padx=5)
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Check Running Status', font=("Times New Roman", 14), command=lambda: self.check_algorithm_status()).grid(row=0, columnspan=2, column=6, sticky='nwse', padx=5)
+        tk.Button(self.admin_frame, bg=btn_bg_color, text='Logout', font=("Times New Roman", 14), command=lambda: self.logout()).grid(row=0, columnspan=2, column=8, sticky='nwse', padx=5)
 
     # logout function
     def logout(self):
@@ -429,7 +430,7 @@ class Go2workClientGUI(tk.Frame):
         self.pack()
         self.admin_frame = tk.Frame(self)
         self.master.title("GO2WORK")
-        self.master.geometry('720x480')
+        self.master.geometry('960x720')
         self.show_login_page()
     ############################## end of init class ########################################
 
