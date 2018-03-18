@@ -2,10 +2,12 @@ import socket
 import tkinter.messagebox
 import sys
 
+ip = '37.46.36.75'
+
 def get_connection():
     client = socket.socket()
-    server_address = ('192.168.1.5', 1234)
-    print('connecting to {} port {}'.format(*server_address))
+    server_address = (ip, 1234)
+    # print('connecting to {} port {}'.format(*server_address))
     client.connect(server_address)
     return client
 
@@ -24,7 +26,7 @@ def send_request_to_server(data_str):
             return True
         elif data == 'False':
             return False
-        print('received {!r}'.format(data))
+        # print('received {!r}'.format(data))
     except Exception:
         tkinter.messagebox.showinfo("Connection", "Connection error!")
         return False
@@ -34,7 +36,7 @@ def send_request_to_server(data_str):
 def recv_msg(sock):
     try:
         header = sock.recv(8)#Magic, small number to begin with.
-        print(header)
+        # print(header)
         # while ";" not in header:
         #     header += sock.recv(2) #Keep looping, picking up two bytes each time
         
@@ -43,16 +45,16 @@ def recv_msg(sock):
         # size_of_package, separator, message_fragment = header.partition(";")
         
         full_message = message_fragment
-        print('message is - ' + message_fragment, len(full_message), int(size_of_package))
+        # print('message is - ' + message_fragment, len(full_message), int(size_of_package))
         
        
         while True:
             if len(full_message) >= int(size_of_package):
                 break
             message = sock.recv(1024)
-            print(full_message)
+            # print(full_message)
             full_message += message.decode('utf-8')
-        print(full_message)
+        # print(full_message)
         return full_message
 
     except OverflowError:
