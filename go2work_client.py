@@ -247,7 +247,7 @@ class Go2workClientGUI(tk.Frame):
     ############################## end of algorithm operations #############################################
     
     
-    ############################## login and buttons panel #################################################
+    ############################## login, help and buttons panel #################################################
     # login page
     # start login frame with user name and password
     # connect to db to check the data and get list of employees
@@ -282,6 +282,24 @@ class Go2workClientGUI(tk.Frame):
             self.ip = tk.Entry(self.dialog_frame, background='white', width=24)
             self.ip.grid(row=3, column=1, sticky='w', padx=20)
 
+    def open_help(self):
+        window = tk.Toplevel(root)
+        window.configure(bg=configuration.bgrd_color)
+        var = tk.StringVar()
+        help_msg = tk.Message(window, textvariable=var, relief='raised')
+        my_str = '      GO2WORK Help System     \n'
+        my_str += 'To see employee list and employee options click on Employee Page\n'
+        my_str += 'On the employee page you can see the list of all employees in the\nsystem '
+        my_str += 'and you can perfome:\n       -Set\\Unset shift for selected employees\n'
+        my_str += '       -Remove selected employees\n       -Update info of one selected employee\n'
+        my_str += '       -Search employee in the system\n       -Add new employee to the system\n'
+        my_str += 'To create routes for employees with status 1 click on Create Routes\n'
+        my_str += 'On the create routes page you can:\n'
+        my_str += '       -Enter the number of vehicles (Default is 4)\n'
+        my_str += '       -Enter the maximum capacity of the vehicle (Default is 6)\n'
+        my_str += '       -Choose the speed of routes creation\n'
+        # my_str +=
+
     # panel of main buttons (always appear)
     # create and put main navigation buttons on the top of the page
     def main_buttons_panel(self):
@@ -296,8 +314,10 @@ class Go2workClientGUI(tk.Frame):
                   command=lambda: self.show_route_page()).grid(row=0, column=2, sticky='nwse')
         tk.Button(self.admin_frame, bg=configuration.btn_bg_color, text='Check Running \nStatus', font=configuration.main_btn_font, 
                   command=lambda: self.check_algorithm_status()).grid(row=0, column=3, sticky='nwse')
+        tk.Button(self.admin_frame, bg=configuration.btn_bg_color, text='      Help      ', font=configuration.main_btn_font, 
+                  command=lambda: self.open_help()).grid(row=0, column=4, sticky='nwse')
         tk.Button(self.admin_frame, bg=configuration.btn_bg_color, text='      Logout      ', font=configuration.main_btn_font, 
-                  command=lambda: logout(self)).grid(row=0, column=4, sticky='nwse')
+                  command=lambda: logout(self)).grid(row=0, column=5, sticky='nwse')
     ############################## end of login and buttons panel #############################################
 
     

@@ -227,11 +227,11 @@ def kill_process(self):
 def run(self, var):
     quality = ['low', 'medium', 'high']
     
-    if self.num_of_vehicles == "":
-        tkinter.messagebox.showinfo("Create Routes", "Please, enter number of vehicles.")
+    if self.num_of_vehicles.get() == "" or self.vehicle_capacity.get() == "":
+        tkinter.messagebox.showinfo("Create Routes", "Please, enter number of vehicles and vehicle capacity.")
         return
     
-    if not self.num_of_vehicles.get().isdigit():
+    if not self.num_of_vehicles.get().isdigit() or not self.vehicle_capacity.get().isdigit():
         tkinter.messagebox.showinfo("Create Routes", "Please, enter only digits.")
         return
     
