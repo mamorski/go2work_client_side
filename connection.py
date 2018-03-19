@@ -3,7 +3,7 @@ import tkinter.messagebox
 import sys
 
 # global ip
-ip = '192.168.1.10'
+ip = '192.168.1.5'
 
 # connect to server function
 # create socket and connect to server

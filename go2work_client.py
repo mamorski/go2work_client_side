@@ -282,29 +282,38 @@ class Go2workClientGUI(tk.Frame):
             self.ip = tk.Entry(self.dialog_frame, background='white', width=24)
             self.ip.grid(row=3, column=1, sticky='w', padx=20)
 
+    # show help message
     def open_help(self):
         window = tk.Toplevel(root)
         window.configure(bg=configuration.bgrd_color)
         var = tk.StringVar()
-        help_msg = tk.Message(window, textvariable=var, relief='raised')
-        my_str = '      GO2WORK Help System     \n'
-        my_str += 'To see employee list and employee options click on Employee Page\n'
+        help_msg = tk.Message(window, textvariable=var, font=configuration.employee_btn_font, relief='raised')
+        help_msg.pack()
+        my_str = '                              GO2WORK Help System     \n\n'
+        my_str += ' To see employee list and employee options click on Employee Page\n'
         my_str += 'On the employee page you can see the list of all employees in the\nsystem '
         my_str += 'and you can perfome:\n       -Set\\Unset shift for selected employees\n'
         my_str += '       -Remove selected employees\n       -Update info of one selected employee\n'
-        my_str += '       -Search employee in the system\n       -Add new employee to the system\n'
-        my_str += 'To create routes for employees with status 1 click on Create Routes\n'
+        my_str += '       -Search employee in the system\n       -Add new employee to the system\n\n'
+        my_str += ' To create routes for employees with status 1 click on Create Routes\n'
         my_str += 'On the create routes page you can:\n'
         my_str += '       -Enter the number of vehicles (Default is 4)\n'
         my_str += '       -Enter the maximum capacity of the vehicle (Default is 6)\n'
         my_str += '       -Choose the speed of routes creation\n'
-        # my_str +=
+        my_str += '       -Click on create to run the algorithm\n\n'
+        my_str += ' To see the routes click on Get Routes\n'
+        my_str += 'You can click on Route button above the employee list\n'
+        my_str += 'It will open the route on your default browser using Google Mapls\n\n'
+        my_str += ' You can check if there is an running algorithm \nby clicking on Check Running Status\n'
+        my_str += 'If you have a running algorithm and you want to stop it you will see stop\n'
+        my_str += 'button on Check Running Status\n\n'
+        var.set(my_str)
 
     # panel of main buttons (always appear)
     # create and put main navigation buttons on the top of the page
     def main_buttons_panel(self):
         forget_frames(self)
-        self.admin_frame.pack(anchor='n', expand=False, side='top', fill='y', padx=200)
+        self.admin_frame.pack(anchor='n', expand=False, side='top', fill='y')
         self.admin_frame.configure(bg=configuration.bgrd_color)
         tk.Button(self.admin_frame, bg=configuration.btn_bg_color, text='Employee Page', font=configuration.main_btn_font, 
                   command=lambda: self.employees_page(0)).grid(row=0, column=0, sticky='nwse')
