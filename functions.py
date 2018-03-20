@@ -69,9 +69,9 @@ def update_shift_or_delete_worker(self, set_shift, employees):
 
 # update employee data
 # function perfoms check if all entries have been field and that address is valid by sending request to Google API
-def make_update(self, selection, window):
+def make_update(self, selection, window, id):
     if (self.add_status.get() == '' or self.add_address.get() == '' or self.add_last_name.get() == ''
-            or self.add_name.get() == '' or self.add_id.get() == ''):
+            or self.add_name.get() == ''):
         tkinter.messagebox.showinfo("Update", "You should fill all fields")
         return
     try:
@@ -81,14 +81,11 @@ def make_update(self, selection, window):
     if not address:
         tkinter.messagebox.showinfo("Update", "Address is not valid, please enter valid address")
         return
-    if not self.add_id.get().isdigit():
-        tkinter.messagebox.showinfo("Update", "Id must be only digit")
-        return
     add_data = {
         'firstname': self.add_name.get(),
         'lastname': self.add_last_name.get(),
         'address': self.add_address.get(),
-        'empID': self.add_id.get(),
+        'empID': id,
         'status': self.add_status.get()
     }
     json_str = json.dumps(add_data)

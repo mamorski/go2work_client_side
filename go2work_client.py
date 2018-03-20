@@ -85,7 +85,7 @@ class Go2workClientGUI(tk.Frame):
         self.add_address = tk.Entry(window, background='white', width=24)
         self.add_address.grid(row=2, column=1, sticky='w', padx=20)
         self.add_address.insert('end', employees[selection[0]]['address'])
-        self.add_id = tk.Entry(window, background='white', width=24)
+        self.add_id = tk.Entry(window, background='white', width=24, state='disabled')
         self.add_id.grid(row=3, column=1, sticky='w', padx=20)
         self.add_id.insert('end', employees[selection[0]]['empID'])
         self.add_status = tk.Entry(window, background='white', width=24)
@@ -101,8 +101,9 @@ class Go2workClientGUI(tk.Frame):
                  font=configuration.lbl_font).grid(row=3, column=0, sticky='w')
         tk.Label(window, text='Status', bg=configuration.lbl_bg_color, fg=configuration.lbl_color, 
                  font=configuration.lbl_font).grid(row=4, column=0, sticky='w')
+        id = int(employees[selection[0]]['empID'])
         tk.Button(window, text='Update', bg=configuration.btn_bg_color, font=("Times New Roman", 10), 
-                  command=lambda: make_update(self, selection, window)).grid(row=5, column=0, sticky='w', padx=20, pady=20)
+                  command=lambda: make_update(self, selection, window, id)).grid(row=5, column=0, sticky='w', padx=20, pady=20)
         tk.Button(window, text='Cancel', bg=configuration.btn_bg_color, font=("Times New Roman", 10), 
                   command=lambda: window.destroy()).grid(row=5, column=1, sticky='w', pady=20)
 
