@@ -207,7 +207,6 @@ class Go2workClientGUI(tk.Frame):
         configuration.active_frame.append(self.check_frame)
         request = str(defineCommands.CHECK_ALGORITHM_STATUS) + ';{}'
         result = connection.send_request_to_server(request)
-        
         if result:
             tkinter.messagebox.showinfo("Check route status", "Creating in process.")
         else:
@@ -231,6 +230,9 @@ class Go2workClientGUI(tk.Frame):
         configuration.active_frame.append(self.route_frame)
         route_data = str(defineCommands.GET_ROUTES) + ";{}"
         received_data = connection.send_request_to_server(route_data)
+        if not received_data:
+            tkinter.messagebox.showwarning("Get Routes", "There is no routes in the system.\nPlease, create routes first")
+            return
         received_data = json.loads(received_data)
         index = 0
         routes = []
@@ -259,15 +261,14 @@ class Go2workClientGUI(tk.Frame):
         self.dialog_frame.configure(bg=configuration.bgrd_color)
         self.user_input = tk.Entry(self.dialog_frame, background='white', width=24)
         self.pass_input = tk.Entry(self.dialog_frame, background='white', width=24, show='*')
-        self.user_input.insert('end', 'root')
-        self.pass_input.insert('end', 'root')
+        # self.user_input.insert('end', 'root')
+        # self.pass_input.insert('end', 'root')
         self.dialog_frame.pack(anchor='center', pady=100)
         configuration.active_frame.append(self.dialog_frame)
         tk.Label(self.dialog_frame, text="Login to GO2WORK system", bg=configuration.lbl_bg_color, fg=configuration.lbl_color, 
                  font=("Times New Roman", 22)).grid(row=0, columnspan=3, sticky='n', pady=80)
         tk.Label(self.dialog_frame, text='Username:', bg=configuration.lbl_bg_color, fg=configuration.lbl_color, 
                  font=configuration.lbl_font).grid(row=1, column=0, sticky='w')
-        self.user_input = tk.Entry(self.dialog_frame, background='white', width=24)
         self.user_input.grid(row=1, column=1, sticky='w', padx=20)
         self.user_input.focus_set()
         tk.Label(self.dialog_frame, text='Password:', bg=configuration.lbl_bg_color, fg=configuration.lbl_color, 
@@ -282,6 +283,11 @@ class Go2workClientGUI(tk.Frame):
                      font=configuration.lbl_font).grid(row=3, column=0, sticky='w')
             self.ip = tk.Entry(self.dialog_frame, background='white', width=24)
             self.ip.grid(row=3, column=1, sticky='w', padx=20)
+            tk.Label(self.dialog_frame, text='port:', bg=configuration.lbl_bg_color, fg=configuration.lbl_color, 
+                     font=configuration.lbl_font).grid(row=4, column=0, sticky='w')
+            self.port = tk.Entry(self.dialog_frame, background='white', width=24)
+            self.port.grid(row=4, column=1, sticky='w', padx=20)
+            self.port.insert('end',connection.port)
 
     # show help message
     def open_help(self):

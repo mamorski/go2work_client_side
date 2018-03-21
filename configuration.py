@@ -14,7 +14,7 @@ employee_btn_font = ("Century Gotic", 12)
  # global variables for all files
 data = {}
 active_frame = []
-debug = False
+debug = True
 employees_dict = []
 employees_to_work = 0
 num_of_employees = 0

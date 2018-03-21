@@ -4,12 +4,13 @@ import sys
 
 # global ip
 ip = '192.168.1.5'
+port = 1234
 
 # connect to server function
 # create socket and connect to server
 def get_connection():
     client = socket.socket()
-    server_address = (ip, 1234)
+    server_address = (ip, port)
     client.connect(server_address)
     return client
 
@@ -26,7 +27,7 @@ def send_request_to_server(data_str):
         elif data == 'False':
             return False
     except Exception:
-        tkinter.messagebox.showinfo("Connection", "Connection error!")
+        # tkinter.messagebox.showinfo("Connection", "Connection error!")
         return False
     return data
 

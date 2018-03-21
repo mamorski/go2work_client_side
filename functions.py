@@ -5,6 +5,8 @@ import defineCommands
 import json
 import connection
 import validate_address
+import sys
+
 
 ############################
 # additional functions file#
@@ -189,6 +191,8 @@ def click_ok(self):
     if configuration.debug:
         if self.ip.get() != '':
             connection.ip = self.ip.get()
+        if self.port.get() != '':
+            connection.port = int(self.port.get())
     json_str = json.dumps(configuration.data)
     json_str = str(defineCommands.LOGIN) + ';' + json_str
     result = connection.send_request_to_server(json_str)
@@ -205,8 +209,8 @@ def click_ok(self):
 # cancel login and exit the program
 def click_cancel(self):
     msg = tkinter.messagebox.askyesno("Login page", "Are you sure you want to cancel login?")
-    if msg:
-        exit()
+    if(msg):
+        sys.exit(1)
 
 # send request to server to kill the running algorithm
 def kill_process(self):
